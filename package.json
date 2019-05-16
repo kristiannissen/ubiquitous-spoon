@@ -1,0 +1,23 @@
+{
+  "name": "ubiquitous-spoon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "parcel dist/index.html",
+    "start": "parcel dist/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-private:kristiannissen/ubiquitous-spoon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.0"
+  }
+}
