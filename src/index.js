@@ -17,12 +17,12 @@ if ("serviceWorker" in navigator) {
 import React from "react";
 import { render } from "react-dom";
 
-const App = (props) => (
+const App = props => (
   <div className="mdl-layout mdl-js-layout is-upgraded">
-        <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--12-col">Hello</div>
-        </div>
+    <div className="mdl-grid">
+      <div className="mdl-cell mdl-cell--12-col">Hello</div>
     </div>
+  </div>
 );
 
 const root = document.getElementById("root");
