@@ -11,16 +11,21 @@ if ("serviceWorker" in navigator) {
       );
   });
 }
-
+/**
+ * React app
+ */
 import React from "react";
 import { render } from "react-dom";
 
-import Calculator from "./app/calculator";
-
-const App = () => (
-  <div>
-    <Calculator />
-  </div>
+const App = (props) => (
+  <div className="mdl-layout mdl-js-layout is-upgraded">
+        <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--12-col">Hello</div>
+        </div>
+    </div>
 );
 
-render(<App />, document.getElementById("root"));
+const root = document.getElementById("root");
+root.classList.add("mdl-layout__container");
+
+render(<App />, root);
