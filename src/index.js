@@ -1,5 +1,7 @@
 /**
  * @file index.js
+ *
+ * ServiceWorker setup
  */
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -17,10 +19,14 @@ if ("serviceWorker" in navigator) {
 import React from "react";
 import { render } from "react-dom";
 
+import Calendar from './components/calendar'
+
 const App = props => (
   <div className="mdl-layout mdl-js-layout is-upgraded">
     <div className="mdl-grid">
-      <div className="mdl-cell mdl-cell--12-col">Hello</div>
+      <div className="mdl-cell mdl-cell--12-col">
+            <Calendar />
+        </div>
     </div>
   </div>
 );
