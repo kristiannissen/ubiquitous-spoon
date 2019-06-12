@@ -3,9 +3,23 @@
  */
 import React from "react";
 
-export const calendar = {
-  startDate: "today",
-  endDate: "tomorrow"
+// Helper function
+Date.prototype.addDays = function(days) {
+  let date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
 };
 
-export const CalendarContext = React.createContext(calendar);
+export const projects = {
+  startDaet: new Date(),
+  endDate: new Date().addDays(6),
+  state: "open"
+};
+
+export const ProjectContext = React.createContext(projects);
+
+export const drawer = {
+  isVisible: false
+};
+
+export const DrawerContext = React.createContext(drawer);

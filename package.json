@@ -5,13 +5,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --w --mode development",
-    "prettify": "prettier --write \"{src,components}/**/*\""
+    "prettify": "prettier --write \"{src,components,containers}/**/*\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "nedb": "^1.8.0",
     "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
