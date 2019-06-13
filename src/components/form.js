@@ -2,16 +2,18 @@
  * @file form.js
  */
 import React, { useState, useReducer } from "react";
-//TODO: Populate the initial state based on the props
-const initialState = {};
 
 const reducer = (state, action) => {
   console.log(state, action);
-  return state;
+  switch (action.type) {
+    default:
+    case "add":
+      return state;
+  }
 };
 
 const Form = props => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, Object.assign({}, props));
   //FIXME: Single letter variables are not goooood
   let p = Object.assign(
     {
