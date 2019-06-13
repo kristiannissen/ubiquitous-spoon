@@ -3,41 +3,42 @@
  */
 import React, { useState, useReducer } from "react";
 
+import InputField from "./inputfield";
+
 const reducer = (state, action) => {
-  console.log(state, action);
   switch (action.type) {
     default:
-    case "add":
       return state;
   }
 };
 
 const Form = props => {
-  const [state, dispatch] = useReducer(reducer, Object.assign({}, props));
-  //FIXME: Single letter variables are not goooood
-  let p = Object.assign(
-    {
-      callback: (name, value) => dispatch({ type: "add", name, value })
-    },
-    props
-  );
+  let initialState = Object.keys(props.fields).map(key => {
+    return { [key]: props.fields[key].value };
+  });
+  // const [state, setState] = useState(initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  let children = React.Children.map(props.children, child =>
-    React.cloneElement(child, { ...p })
-  );
+  const onChange = data => console.log(data);
+  let children = Object.keys(props.fields).map((key, index) => {
+    let attr = props.fields[key];
+    return <InputField key={index} name={key} {...attr} onChange={onChange} />;
+  });
+
+  const submitHandler = () => console.log("Hello Kitty");
 
   return (
     <form className="mdl-grid" onSubmit={e => e.preventDefault()}>
       {children}
       <div>
         <button
-          onClick={() => dispatch({ type: "create-project" })}
+          onClick={() => submitHandler()}
           className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
         >
           Save
         </button>
         <button
-          onClick={() => dispatch({ type: "cancel" })}
+          onClick={() => console.log("Cancel")}
           className="mdl-button mdl-js-button"
         >
           Cancel

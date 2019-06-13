@@ -5,27 +5,27 @@ import React, { useState } from "react";
 
 // FIXME: should be pulled into a single import
 import Form from "./form";
-import InputField from "./inputfield";
-
-const formFields = {
-  name: {
-    type: "text",
-    label: "Your name",
-    required: "true",
-    pattern: "-?[0-9]*(.[0-9]+)?",
-    value: "Hello Kitty"
-  }
-};
 
 const Header = props => {
   const [drawerState, setState] = useState(false);
-
+  const formFields = {
+    name: {
+      type: "text",
+      label: "Your name",
+      value: "Hello you"
+    },
+    startDate: {
+      type: "date",
+      label: "Start Date",
+      value: ""
+    },
+    endDate: {
+      type: "date",
+      label: "End Date",
+      value: ""
+    }
+  };
   let visible = drawerState == false ? "" : "is-visible";
-
-  let fields = Object.keys(formFields).map((name, index) => {
-    let field = formFields[name];
-    return <InputField key={index} {...field} name={name} />;
-  });
 
   return (
     <div>
@@ -51,7 +51,11 @@ const Header = props => {
         </div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <Form action="project-new">{fields}</Form>
+            <Form
+              action="project-new"
+              fields={formFields}
+              action="project-create"
+            />
           </div>
         </div>
         <nav className="mdl-navigation">

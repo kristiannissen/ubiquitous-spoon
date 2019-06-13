@@ -13,13 +13,8 @@ Date.prototype.addDays = function(days) {
 export const projects = {
   startDaet: new Date(),
   endDate: new Date().addDays(6),
-  state: "open"
+  state: "open",
+  id: ""
 };
 
 export const ProjectContext = React.createContext(projects);
-
-export const drawer = {
-  isVisible: false
-};
-
-export const DrawerContext = React.createContext(drawer);

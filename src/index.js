@@ -20,22 +20,17 @@ import React from "react";
 import { render } from "react-dom";
 
 import Projects from "./containers/projects";
-import { ProjectContext, projects, DrawerContext, drawer } from "./context";
 import Header from "./components/header";
 
 import "./app.css";
 
 const App = props => (
   <div className="mdl-layout mdl-js-layout is-upgraded">
-    <DrawerContext.Provider value={drawer}>
-      <Header />
-    </DrawerContext.Provider>
+    <Header />
     <main className="mdl-layout__content">
       <div className="mdl-grid page-content">
         <div className="mdl-cell mdl-cell--12-col">
-          <ProjectContext.Provider value={projects}>
-            <Projects />
-          </ProjectContext.Provider>
+          <Projects />
         </div>
       </div>
     </main>
