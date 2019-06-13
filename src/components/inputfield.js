@@ -10,7 +10,7 @@ const InputField = props => {
     id: `id_${props.name}`
   };
   const [val, setValue] = useState(props.value);
-  useEffect(() => props.onChange({ [props.name]: val }));
+  useEffect(() => props.onChange({ name: props.name, value: val }), [val]);
 
   return (
     <div className="mdl-textfield mdl-js-textfield is-upgraded is-focused mdl-cell mdl-cell--col-8">
