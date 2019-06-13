@@ -23,6 +23,8 @@ import Projects from "./containers/projects";
 import { ProjectContext, projects, DrawerContext, drawer } from "./context";
 import Header from "./components/header";
 
+import "./app.css";
+
 const App = props => (
   <div className="mdl-layout mdl-js-layout is-upgraded">
     <DrawerContext.Provider value={drawer}>

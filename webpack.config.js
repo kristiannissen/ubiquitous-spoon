@@ -26,6 +26,13 @@ const conf = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.css/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
             }
         ]
     },
@@ -36,7 +43,12 @@ const conf = {
         new HtmlWebPackPlugin({
             template: './src/index.html',
             filename: './index.html',
-            hash: true
+            hash: true,
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: false
+            }
         })
     ]
 };

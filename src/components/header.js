@@ -3,10 +3,29 @@
  */
 import React, { useState } from "react";
 
-const Header = props => {
-  const [state, setState] = useState(false);
+// FIXME: should be pulled into a single import
+import Form from "./form";
+import InputField from "./inputfield";
 
-  let visible = state == false ? "" : "is-visible";
+const formFields = {
+  name: {
+    type: "text",
+    label: "Your name",
+    required: "true",
+    pattern: "-?[0-9]*(.[0-9]+)?",
+    value: "Hello Kitty"
+  }
+};
+
+const Header = props => {
+  const [drawerState, setState] = useState(false);
+
+  let visible = drawerState == false ? "" : "is-visible";
+
+  let fields = Object.keys(formFields).map((name, index) => {
+    let field = formFields[name];
+    return <InputField key={index} {...field} name={name} />;
+  });
 
   return (
     <div>
@@ -20,11 +39,20 @@ const Header = props => {
         </div>
       </header>
       <div className={`mdl-layout__drawer ${visible}`}>
-        <div
-          className="mdl-layout__drawer-button"
-          onClick={() => setState(false)}
-        >
-          <i className="material-icons">close</i>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--2-col mdl-cell--10-offset">
+            <div
+              className="mdl-button mdl-js-button"
+              onClick={() => setState(false)}
+            >
+              <i className="material-icons">close</i>
+            </div>
+          </div>
+        </div>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--12-col">
+            <Form action="project-new">{fields}</Form>
+          </div>
         </div>
         <nav className="mdl-navigation">
           <a className="mdl-navigation__link" href="">
@@ -34,7 +62,7 @@ const Header = props => {
       </div>
       <div
         className="mdl-layout__drawer-button"
-        onClick={() => setState(state == false ? true : false)}
+        onClick={() => setState(drawerState == false ? true : false)}
       >
         <i className="material-icons">menu</i>
       </div>

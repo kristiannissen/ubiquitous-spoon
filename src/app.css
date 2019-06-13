@@ -1,0 +1,9 @@
+body {
+  background-color: #eee;
+}
+.drawer-button-container {
+  height: 30px;
+}
+.mdl-layout__content {
+  margin-top: 56px;
+}
