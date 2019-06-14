@@ -55,7 +55,7 @@ const Form = props => {
   };
 
   return (
-    <form className="mdl-grid" onSubmit={e => e.preventDefault()}>
+    <form className="mdl-grid" onSubmit={e => e.preventDefault()} autoComplete="off">
       {children}
       <div>
         <button
