@@ -6,20 +6,26 @@ import React, { useReducer } from "react";
 import InputField from "./inputfield";
 
 const reducer = (state, action) => {
-  //console.log("reducer", state, action)
+  // console.log("reducer", state, action)
   switch (action.type) {
     default:
       return state;
     case "change":
-      return { ...state, [action.name]: action.value };
+      // console.log({...state, [action.name]: action.value})
+      return {
+        ...state,
+        [action.name]: action.value
+      };
   }
 };
 
 const Form = props => {
   //Prep initialState from props
-  let initialState = Object.keys(props.fields).map(key => {
-    return { [key]: props.fields[key].value };
-  });
+  let initialState = Object.keys(props.fields).reduce((obj, item) => {
+    //FIXME: should have default value from props
+    obj[item] = "";
+    return obj;
+  }, {});
   //Create reducer
   const [state, dispatch] = useReducer(reducer, initialState);
   //Value change handler for child component
@@ -35,7 +41,7 @@ const Form = props => {
     );
   });
   //Form submit handler
-  const submitHandler = () => console.log(state);
+  const submitHandler = () => console.log("change", state, initialState);
 
   return (
     <form className="mdl-grid" onSubmit={e => e.preventDefault()}>
