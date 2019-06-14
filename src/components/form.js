@@ -23,7 +23,7 @@ const Form = props => {
   //Prep initialState from props
   let initialState = Object.keys(props.fields).reduce((obj, item) => {
     //FIXME: should have default value from props
-    obj[item] = "";
+    obj[item] = props.fields[item].value;
     return obj;
   }, {});
   //Create reducer
