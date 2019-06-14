@@ -1,7 +1,7 @@
 /**
  * @file src/components/inputfield.js
  */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const InputField = props => {
   let attributes = {
@@ -12,13 +12,20 @@ const InputField = props => {
   const [val, setValue] = useState(props.value);
   useEffect(() => props.onChange({ name: props.name, value: val }), [val]);
 
+  const divEl = useRef(null);
+
   return (
-    <div className="mdl-textfield mdl-js-textfield is-upgraded is-focused mdl-cell mdl-cell--col-8">
+    <div
+      ref={divEl}
+      className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded mdl-cell mdl-cell--12-col"
+    >
       <input
         className="mdl-textfield__input"
         {...attributes}
         value={val}
         onChange={e => setValue(e.target.value)}
+        onFocus={() => divEl.current.classList.add("is-focused")}
+        onBlur={() => divEl.current.classList.remove("is-focused")}
       />
       <label className="mdl-textfield__label" htmlFor={`id_${props.name}`}>
         {props.label}

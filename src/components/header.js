@@ -12,7 +12,7 @@ const Header = props => {
     name: {
       type: "text",
       label: "Your name",
-      value: "Hello you"
+      value: ""
     },
     startDate: {
       type: "date",
@@ -51,11 +51,7 @@ const Header = props => {
         </div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <Form
-              action="project-new"
-              fields={formFields}
-              action="project-create"
-            />
+            <Form fields={formFields} action="project-upsert" />
           </div>
         </div>
         <nav className="mdl-navigation">

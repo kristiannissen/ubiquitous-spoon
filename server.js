@@ -22,6 +22,10 @@ io.on("connection", socket => {
     console.log("chat " + data.msg);
     io.emit("chat message", data.msg);
   });
+    // Create project
+    socket.on("project-upsert", doc => {
+        console.log(doc)
+    })
 
   socket.on("disconnect", () => console.log("client disconnected"));
 });

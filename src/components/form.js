@@ -2,6 +2,7 @@
  * @file form.js
  */
 import React, { useReducer } from "react";
+import io from "socket.io-client";
 
 import InputField from "./inputfield";
 
@@ -11,7 +12,7 @@ const reducer = (state, action) => {
     default:
       return state;
     case "change":
-      // console.log({...state, [action.name]: action.value})
+      // console.log("change", state, action)
       return {
         ...state,
         [action.name]: action.value
@@ -21,13 +22,16 @@ const reducer = (state, action) => {
 
 const Form = props => {
   //Prep initialState from props
+  //TODO: _id can be undefined
   let initialState = Object.keys(props.fields).reduce((obj, item) => {
-    //FIXME: should have default value from props
     obj[item] = props.fields[item].value;
     return obj;
   }, {});
-  //Create reducer
-  const [state, dispatch] = useReducer(reducer, initialState);
+  //Create reducer, overwrite value of _id if it is passed
+  const [state, dispatch] = useReducer(
+    reducer,
+    Object.assign({ _id: "" }, initialState)
+  );
   //Value change handler for child component
   const onChangeHandler = data => {
     // console.log(data);
@@ -41,7 +45,14 @@ const Form = props => {
     );
   });
   //Form submit handler
-  const submitHandler = () => console.log("change", state, initialState);
+  const submitHandler = () => {
+    const socket = io();
+    socket.emit(props.action, state);
+    socket.on(props.action, resp => {
+      // console.log("form submithandler", resp)
+      dispatch({ type: "change", ...resp });
+    });
+  };
 
   return (
     <form className="mdl-grid" onSubmit={e => e.preventDefault()}>
