@@ -4,8 +4,6 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-import { addDays } from "./../datehelpers";
-
 const Projects = props => {
   const [projects, updateProjects] = useState([]);
 
@@ -17,15 +15,12 @@ const Projects = props => {
     socket.on("projects", resp => updateProjects(resp.projects));
   }, [projects]);
 
-  let dates = dateRange(projects);
-
-  let projectDateRange = dates.map((date, i) => {
-    return (
-      <div key={i} className="mdl-cell mdl-cell--1-col">
-        <small>{dateFormat(date)}</small>
+  let dates = dateRange(projects),
+    legends = datesBetween(dates[0], dates[dates.length - 1]).map((date, i) => (
+      <div key={i} className="legend">
+        {dateFormat(date)}
       </div>
-    );
-  });
+    ));
 
   let projectList = projects
     .sort((a, b) => {
@@ -39,27 +34,23 @@ const Projects = props => {
       return (
         <div
           key={indx}
-          className={`mdl-cell mdl-cell--${dayDiff(
+          className={`${dayDiff(
             Date.parse(item.startDate),
             Date.parse(item.endDate)
-          )}-col mld-cell--${dayDiff(
-            dates[0],
-            Date.parse(item.startDate)
-          )}-offset`}
+          )} ${dayDiff(dates[0], Date.parse(item.startDate))} `}
         >
           {item.name} {item.startDate} {item.endDate} off{" "}
           {dayDiff(dates[0], Date.parse(item.startDate))}
           dur {dayDiff(Date.parse(item.startDate), Date.parse(item.endDate))}
+          add {dateFormat(addDays(Date.parse(item.startDate), 5))}
         </div>
       );
     });
 
   return (
-    <div className="mdl-grid">
-      <div className="mdl-grid mld-cell mdl-cell--12-col">
-        {projectDateRange}
-      </div>
-      <div className="mdl-grid mdl-cell mdl-cell--12-col">{projectList}</div>
+    <div className="mdl-grid scrollable-content">
+      <div className="legends">{legends}</div>
+      <div>{projectList}</div>
     </div>
   );
 };
@@ -86,5 +77,21 @@ const dateRange = dateArr => {
 
 const dayDiff = (first, second) =>
   Math.round((second - first) / (1000 * 60 * 60 * 24));
+
+const addDays = (date, days) => {
+  let newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + days);
+  return newDate;
+};
+
+const datesBetween = (first, second) => {
+  let dates = [],
+    currentDate = first;
+  while (currentDate <= second) {
+    dates.push(currentDate);
+    currentDate = addDays(currentDate, 1);
+  }
+  return dates;
+};
 
 export default Projects;

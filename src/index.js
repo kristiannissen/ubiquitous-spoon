@@ -19,7 +19,7 @@ if ("serviceWorker" in navigator) {
 import React from "react";
 import { render } from "react-dom";
 
-import Projects from "./containers/projects";
+import Projects from "./components/projects";
 import Header from "./components/header";
 import SnackBar from "./components/snackbar";
 

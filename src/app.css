@@ -4,3 +4,10 @@ body {
 .drawer-button-container {
   height: 30px;
 }
+.scrollable-content {
+  overflow-y: scroll;
+}
+.legends {
+}
+.legend {
+}
