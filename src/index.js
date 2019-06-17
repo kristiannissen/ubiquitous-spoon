@@ -21,6 +21,7 @@ import { render } from "react-dom";
 
 import Projects from "./containers/projects";
 import Header from "./components/header";
+import SnackBar from "./components/snackbar";
 
 import "./app.css";
 
@@ -34,6 +35,7 @@ const App = props => (
         </div>
       </div>
     </main>
+    <SnackBar />
   </div>
 );
 

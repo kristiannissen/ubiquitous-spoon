@@ -11,11 +11,11 @@ Date.prototype.addDays = function(days) {
 };
 
 export const dateFormat = date =>
-    new Date(Date.parse(date)).toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    })
+  new Date(Date.parse(date)).toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
 
 export const projects = {
   startDate: dateFormat(new Date()),

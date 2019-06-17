@@ -25,6 +25,8 @@ io.on("connection", socket => {
         console.log(query)
     })
 
+    io.emit("error", {message: "Something went wrong!", code: 666})
+
   socket.on("disconnect", () => console.log("client disconnected"));
 });
 
