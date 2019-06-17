@@ -5,7 +5,8 @@ var app = require("connect")(),
   serveStatic = require("serve-static"),
   path = require("path"),
   http = require("http").createServer(app),
-  io = require("socket.io")(http);
+  io = require("socket.io")(http),
+    fs = require("fs")
 
 app.use(serveStatic(path.join(__dirname, "dist")));
 
@@ -21,11 +22,15 @@ io.on("connection", socket => {
         console.log(doc)
     })
     // Get all projects
-    socket.on("projects", query => {
-        console.log(query)
+    socket.on("projects", () => {
+        fs.readFile("./data.json", function(err, data) {
+            if (err) io.emit("error", {message: err, code: 666})
+            let projects = data
+            io.emit("projects", JSON.parse(projects))
+        })
     })
 
-    io.emit("error", {message: "Something went wrong!", code: 666})
+    io.emit("error", {message: "Server restarted!", code: 666})
 
   socket.on("disconnect", () => console.log("client disconnected"));
 });

@@ -1,0 +1,9 @@
+{
+    "projects": [
+        {"_id": 1, "name": "Hello Kitty #1", "startDate": "2019/06/1", "endDate": "2019/7/20"},
+        {"_id": 2, "name": "Hello Kitty #2", "startDate": "2019/07/2", "endDate": "2019/7/21"},
+        {"_id": 3, "name": "Hello Kitty #3", "startDate": "2019/06/3", "endDate": "2019/7/22"},
+        {"_id": 4, "name": "Hello Kitty #4", "startDate": "2019/06/4", "endDate": "2019/7/23"},
+        {"_id": 5, "name": "Hello Kitty #5", "startDate": "2019/06/5", "endDate": "2019/7/24"}
+    ]
+}

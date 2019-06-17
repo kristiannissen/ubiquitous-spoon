@@ -3,11 +3,13 @@
  */
 
 // Add number of days
-Date.prototype.addDays = function(days) {
-  let date = new Date(this.valueOf());
+export const addDays = (dateStr, days) => {
+  let date = new Date(Date.parse(dateStr));
   date.setDate(date.getDate() + days);
   return date;
 };
+
+export const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // Check if day is Sun or Sat
 const isWeekend = date => [0, 6].includes(date.getDay());
