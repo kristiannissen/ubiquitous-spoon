@@ -4,10 +4,10 @@ body {
 .drawer-button-container {
   height: 30px;
 }
-.scrollable-content {
-  overflow-y: scroll;
+.project-component {
+  margin: 8px 0;
 }
-.legends {
-}
-.legend {
+.project-timeline {
+  height: 25px;
+  width: 100%;
 }
