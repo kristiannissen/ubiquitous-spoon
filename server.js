@@ -6,7 +6,8 @@ var app = require("connect")(),
   path = require("path"),
   http = require("http").createServer(app),
   io = require("socket.io")(http),
-  fs = require("fs");
+  fs = require("fs"),
+  uuid = require("uuid/v1");
 
 /**
  * @return JSON data from file
@@ -24,8 +25,15 @@ const readData = () => {
  * @param {data} - data to store
  * @return promise
  */
-const writeData = (data) => {
-    console.log(data)
+const writeData = data => {
+  let jsonData = JSON.stringify(data);
+    console.log(jsonData)
+  return new Promise((resolve, reject) => {
+    fs.writeFile("data.json", jsonData, err => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
 };
 
 app.use(serveStatic(path.join(__dirname, "dist")));
@@ -37,16 +45,21 @@ io.on("connection", socket => {
   socket.on("project-create", doc => {
     readData()
       .then(data => {
-        console.log(Object.assign(data.projects, doc))
+        let projects = data.projects;
+        projects[uuid()] = doc;
+        data["projects"] = projects;
+        writeData(data)
+          .then(() => io.emit("projects", data.projects))
+          .catch(err => console.log(err));
       })
-      .catch(err => io.emit("error", {message: err}))
+      .catch(err => console.log(err));
   });
   // Get all projects
   socket.on("projects", () => {
     // Read data and return projects
     readData()
       .then(data => io.emit("projects", data.projects))
-      .catch(err => io.emit("error", { message: err }));
+      .catch(err => console.log(err));
   });
 
   // io.emit("error", { message: "Server restarted!", code: 666 });

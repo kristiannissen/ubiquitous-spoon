@@ -38,8 +38,8 @@ const Projects = props => {
         );
       }
     ),
-    gantt = Object.keys(projects).map(indx => {
-      let project = projects[indx],
+    gantt = Object.keys(projects).map((key, indx) => {
+      let project = projects[key],
         startDate = new Date(Date.parse(project.startDate)),
         endDate = new Date(Date.parse(project.endDate)),
         duration = weekDiff(startDate, endDate),
@@ -48,7 +48,6 @@ const Projects = props => {
         css = ["mdl-cell"];
       css.push(`mdl-cell--${duration}-col`);
       css.push(`mdl-cell--${weeksFromStart - offset}-offset`);
-      // console.log(project.name, weeksFromStart, duration, offset);
 
       return (
         <div
@@ -56,7 +55,7 @@ const Projects = props => {
           className="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col"
         >
           <div className={css.join(" ")}>
-            <Project {...project} />
+            <Project {...project} id={key} />
           </div>
         </div>
       );
@@ -68,7 +67,7 @@ const Projects = props => {
         {monthRange}
       </div>
       <div className="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col">
-        {gantt} 
+        {gantt}
       </div>
     </div>
   );
@@ -77,10 +76,9 @@ const Projects = props => {
 const projectDateRange = dateArr => {
   let dates = [];
   Object.keys(dateArr).forEach(key => {
-      console.log(key)
     dates.push(new Date(Date.parse(dateArr[key].startDate)));
     dates.push(new Date(Date.parse(dateArr[key].endDate)));
-  })
+  });
   return dates.sort((a, b) => {
     if (a < b) return -1;
     if (a > b) return 1;
