@@ -1,10 +1,16 @@
 /**
  * @file form.js
  */
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import io from "socket.io-client";
 
 import InputField from "./inputfield";
+
+const initialState = {
+  name: "",
+  startDate: "",
+  endDate: ""
+};
 
 const reducer = (state, action) => {
   // console.log("reducer", state, action)
@@ -12,7 +18,7 @@ const reducer = (state, action) => {
     default:
       return state;
     case "change":
-      // console.log("change", state, action)
+      console.log("change", state, action);
       return {
         ...state,
         [action.name]: action.value
@@ -21,35 +27,9 @@ const reducer = (state, action) => {
 };
 
 const Form = props => {
-  //Prep initialState from props
-  //TODO: _id can be undefined
-  let initialState = Object.keys(props.fields).reduce((obj, item) => {
-    obj[item] = props.fields[item].value;
-    return obj;
-  }, {});
-  //Create reducer, overwrite value of _id if it is passed
   const [state, dispatch] = useReducer(reducer, initialState);
-  //Value change handler for child component
-  const onChangeHandler = data => {
-    // console.log(data);
-    return dispatch({ type: "change", ...data });
-  };
-  //Build children components
-  let children = Object.keys(props.fields).map((key, index) => {
-    let attr = props.fields[key];
-    return (
-      <InputField key={index} name={key} {...attr} onChange={onChangeHandler} />
-    );
-  });
-  //Form submit handler
-  const submitHandler = () => {
-    const socket = io();
-    socket.emit(props.action, state);
-    socket.on(props.action, resp => {
-      // console.log("form submithandler", resp)
-      dispatch({ type: "change", ...resp });
-    });
-  };
+
+  const change = data => console.log(data);
 
   return (
     <form
@@ -57,10 +37,27 @@ const Form = props => {
       onSubmit={e => e.preventDefault()}
       autoComplete="off"
     >
-      {children}
+      <InputField
+        name="name"
+        label="Enter Name"
+        value={state.name}
+        onChange={change}
+      />
+      <InputField
+        name="startDate"
+        label="Enter Start Date"
+        value={state.startDate}
+        onChange={change}
+      />
+      <InputField
+        name="endDate"
+        label="Enter End Date"
+        value={state.endDate}
+        onChange={change}
+      />
       <div>
         <button
-          onClick={() => submitHandler()}
+          onClick={() => console.log("Submit")}
           className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
         >
           Save

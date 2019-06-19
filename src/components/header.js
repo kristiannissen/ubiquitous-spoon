@@ -3,6 +3,8 @@
  */
 import React, { useState } from "react";
 
+import Form from "./form";
+
 const Header = props => {
   const [drawerState, setDrawerState] = useState(false);
 
@@ -32,6 +34,7 @@ const Header = props => {
         </div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
+            <Form />
           </div>
         </div>
         <nav className="mdl-navigation">

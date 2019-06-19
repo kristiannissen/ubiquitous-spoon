@@ -30,7 +30,6 @@ const InputField = props => {
       <label className="mdl-textfield__label" htmlFor={`id_${props.name}`}>
         {props.label}
       </label>
-      <span className="mdl-textfield__error">Input is not a number</span>
     </div>
   );
 };
