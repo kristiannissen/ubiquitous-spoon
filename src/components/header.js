@@ -1,14 +1,21 @@
 /**
  * @file src/components/header.js
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
 import Form from "./form";
+
+const socket = io();
 
 const Header = props => {
   const [drawerState, setDrawerState] = useState(false);
 
   let visible = drawerState == false ? "" : "is-visible";
+
+  useEffect(() => {
+    socket.on("project-edit", data => setDrawerState(true));
+  }, []);
 
   return (
     <div>

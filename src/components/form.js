@@ -1,7 +1,7 @@
 /**
  * @file form.js
  */
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useEffect, useState } from "react";
 import io from "socket.io-client";
 
 import InputField from "./inputfield";
@@ -9,27 +9,44 @@ import InputField from "./inputfield";
 const initialState = {
   name: "",
   startDate: "",
-  endDate: ""
+  endDate: "",
+  _id: null
 };
 
 const reducer = (state, action) => {
-  // console.log("reducer", state, action)
+  console.log("reducer", state);
   switch (action.type) {
     default:
       return state;
     case "change":
-      console.log("change", state, action);
+      // console.log("change", state, action);
       return {
         ...state,
         [action.name]: action.value
       };
+    case "edit":
+      return {
+        ...state,
+        name: action.name,
+        startDate: action.startDate,
+        endDate: action.endDate,
+        _id: action.id
+      };
   }
 };
 
+const socket = io();
+
 const Form = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    socket.on("project-edit", data => dispatch({ type: "edit", ...data }));
+  }, []);
 
   const change = data => console.log(data);
+  const submitHandler = () => {
+    console.log(state);
+  };
 
   return (
     <form
@@ -44,12 +61,14 @@ const Form = props => {
         onChange={change}
       />
       <InputField
+        type="date"
         name="startDate"
         label="Enter Start Date"
         value={state.startDate}
         onChange={change}
       />
       <InputField
+        type="date"
         name="endDate"
         label="Enter End Date"
         value={state.endDate}
@@ -57,7 +76,7 @@ const Form = props => {
       />
       <div>
         <button
-          onClick={() => console.log("Submit")}
+          onClick={() => submitHandler()}
           className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
         >
           Save
