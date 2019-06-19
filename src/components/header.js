@@ -3,28 +3,9 @@
  */
 import React, { useState } from "react";
 
-// FIXME: should be pulled into a single import
-import Form from "./form";
-
 const Header = props => {
-  const [drawerState, setState] = useState(false);
-  const formFields = {
-    name: {
-      type: "text",
-      label: "Your name",
-      value: ""
-    },
-    startDate: {
-      type: "date",
-      label: "Start Date",
-      value: ""
-    },
-    endDate: {
-      type: "date",
-      label: "End Date",
-      value: ""
-    }
-  };
+  const [drawerState, setDrawerState] = useState(false);
+
   let visible = drawerState == false ? "" : "is-visible";
 
   return (
@@ -43,7 +24,7 @@ const Header = props => {
           <div className="mdl-cell mdl-cell--2-col mdl-cell--10-offset">
             <div
               className="mdl-button mdl-js-button"
-              onClick={() => setState(false)}
+              onClick={() => setDrawerState(false)}
             >
               <i className="material-icons">close</i>
             </div>
@@ -51,7 +32,6 @@ const Header = props => {
         </div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <Form fields={formFields} action="project-create" />
           </div>
         </div>
         <nav className="mdl-navigation">
@@ -62,7 +42,7 @@ const Header = props => {
       </div>
       <div
         className="mdl-layout__drawer-button"
-        onClick={() => setState(drawerState == false ? true : false)}
+        onClick={() => setDrawerState(drawerState == false ? true : false)}
       >
         <i className="material-icons">menu</i>
       </div>

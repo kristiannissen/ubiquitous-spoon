@@ -20,14 +20,8 @@ const readData = () => {
     });
   });
 };
-/**
- * @param {string} - Object key to target
- * @param {data} - data to store
- * @return promise
- */
 const writeData = data => {
   let jsonData = JSON.stringify(data);
-    console.log(jsonData)
   return new Promise((resolve, reject) => {
     fs.writeFile("data.json", jsonData, err => {
       if (err) reject(err);
@@ -41,7 +35,7 @@ app.use(serveStatic(path.join(__dirname, "dist")));
 io.on("connection", socket => {
   console.log("client connected");
 
-  // Upsert project
+  // Create project
   socket.on("project-create", doc => {
     readData()
       .then(data => {
@@ -54,6 +48,15 @@ io.on("connection", socket => {
       })
       .catch(err => console.log(err));
   });
+    socket.on("project-edit", props => {
+        readData()
+        .then(data => {
+            // console.log(data.projects, props)
+            let project = data.projects[props.id] || {}
+            io.emit("project-edit", Object.assign({_id: props.id}, project))
+        })
+        .catch(err => console.log(err))
+    })
   // Get all projects
   socket.on("projects", () => {
     // Read data and return projects
