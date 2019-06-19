@@ -14,7 +14,7 @@ import {
 import Project from "./project";
 // TODO: Rename component
 const Projects = props => {
-  const [projects, updateProjects] = useState([]);
+  const [projects, updateProjects] = useState({});
 
   useEffect(() => {
     const socket = io();
@@ -37,8 +37,9 @@ const Projects = props => {
         );
       }
     ),
-    gantt = projects.map((project, indx) => {
-      let startDate = new Date(Date.parse(project.startDate)),
+    gantt = Object.keys(projects).map(indx => {
+      let project = projects[indx],
+        startDate = new Date(Date.parse(project.startDate)),
         endDate = new Date(Date.parse(project.endDate)),
         duration = weekDiff(startDate, endDate),
         weeksFromStart = weekDiff(dates[0], startDate),
@@ -66,7 +67,7 @@ const Projects = props => {
         {monthRange}
       </div>
       <div className="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col">
-        {gantt}
+        
       </div>
     </div>
   );
@@ -74,10 +75,11 @@ const Projects = props => {
 
 const projectDateRange = dateArr => {
   let dates = [];
-  for (let i in dateArr) {
-    dates.push(new Date(Date.parse(dateArr[i].startDate)));
-    dates.push(new Date(Date.parse(dateArr[i].endDate)));
-  }
+  Object.keys(dateArr).forEach(key => {
+      console.log(key)
+    dates.push(new Date(Date.parse(dateArr[key].startDate)));
+    dates.push(new Date(Date.parse(dateArr[key].endDate)));
+  })
   return dates.sort((a, b) => {
     if (a < b) return -1;
     if (a > b) return 1;

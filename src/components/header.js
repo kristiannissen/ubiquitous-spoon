@@ -51,7 +51,7 @@ const Header = props => {
         </div>
         <div className="mdl-grid">
           <div className="mdl-cell mdl-cell--12-col">
-            <Form fields={formFields} action="project-upsert" />
+            <Form fields={formFields} action="project-create" />
           </div>
         </div>
         <nav className="mdl-navigation">

@@ -1,10 +1,10 @@
 {
-    "projects": [
-        {"_id": 1, "name": "Hello Kitty #1", "startDate": "2019/06/1", "endDate": "2019/7/20", "color": "#32CD32"},
-        {"_id": 2, "name": "Hello Kitty #2", "startDate": "2019/07/14", "endDate": "2019/7/21", "color": "#00FF00"},
-        {"_id": 3, "name": "Hello Kitty #3", "startDate": "2019/06/8", "endDate": "2019/7/22", "color": "#228B22"},
-        {"_id": 4, "name": "Hello Kitty #4", "startDate": "2019/06/20", "endDate": "2019/7/23", "color": "#008000"},
-        {"_id": 5, "name": "Hello Kitty #5", "startDate": "2019/06/10", "endDate": "2019/7/24", "color": "#006400"},
-        {"_id": 6, "name": "Hello Kitty #6", "startDate": "2019/07/22", "endDate": "2019/8/24", "color": "#ADFF2F"}
-    ]
+    "projects": {
+        "fd6556d8-353c-48f2-b85f-fb0a5f487182": {
+            "name": "Hello Kitty #1",
+            "startDate": "2019/06/04",
+            "endDate": "2019/07/01",
+            "color": "red"
+        }
+    }
 }

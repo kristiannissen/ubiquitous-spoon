@@ -24,15 +24,8 @@ const readData = () => {
  * @param {data} - data to store
  * @return promise
  */
-const writeData = (key, data) => {
-  return new Promise((resolve, rejset) => {
-    readData()
-      .then(data => {
-        console.log(data);
-        resolve(data);
-      })
-      .catch(err => reject(err));
-  });
+const writeData = (data) => {
+    console.log(data)
 };
 
 app.use(serveStatic(path.join(__dirname, "dist")));
@@ -40,24 +33,24 @@ app.use(serveStatic(path.join(__dirname, "dist")));
 io.on("connection", socket => {
   console.log("client connected");
 
-  socket.on("chat message", data => {
-    console.log("chat " + data.msg);
-    io.emit("chat message", data.msg);
-  });
   // Upsert project
-  socket.on("project-upsert", doc => {
-    writeData("projects", doc)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+  socket.on("project-create", doc => {
+    readData()
+      .then(data => {
+        console.log(Object.assign(data.projects, doc))
+      })
+      .catch(err => io.emit("error", {message: err}))
   });
   // Get all projects
   socket.on("projects", () => {
+    io.emit("error", {message: "return projects"})
+
     readData()
-      .then(data => io.emit("projects", data.projects))
+      .then(data => console.log("projects", data))
       .catch(err => io.emit("error", { message: err }));
   });
 
-  io.emit("error", { message: "Server restarted!", code: 666 });
+  // io.emit("error", { message: "Server restarted!", code: 666 });
 
   socket.on("disconnect", () => console.log("client disconnected"));
 });
