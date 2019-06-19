@@ -43,10 +43,9 @@ io.on("connection", socket => {
   });
   // Get all projects
   socket.on("projects", () => {
-    io.emit("error", {message: "return projects"})
-
+    // Read data and return projects
     readData()
-      .then(data => console.log("projects", data))
+      .then(data => io.emit("projects", data.projects))
       .catch(err => io.emit("error", { message: err }));
   });
 

@@ -18,7 +18,8 @@ const Projects = props => {
 
   useEffect(() => {
     const socket = io();
-    if (projects.length == 0) {
+    // Check if object has any properties
+    if (Object.getOwnPropertyNames(projects).length == 0) {
       socket.emit("projects");
     }
     socket.on("projects", resp => updateProjects(resp));
@@ -67,7 +68,7 @@ const Projects = props => {
         {monthRange}
       </div>
       <div className="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col">
-        
+        {gantt} 
       </div>
     </div>
   );
