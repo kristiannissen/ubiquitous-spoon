@@ -21,7 +21,7 @@ const Projects = props => {
     if (projects.length == 0) {
       socket.emit("projects");
     }
-    socket.on("projects", resp => updateProjects(resp.projects));
+    socket.on("projects", resp => updateProjects(resp));
   }, [projects]);
   // 2. parameter in addMonths could be a context variable
   let dates = projectDateRange(projects),

@@ -28,10 +28,7 @@ const Form = props => {
     return obj;
   }, {});
   //Create reducer, overwrite value of _id if it is passed
-  const [state, dispatch] = useReducer(
-    reducer,
-    Object.assign({ _id: "" }, initialState)
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
   //Value change handler for child component
   const onChangeHandler = data => {
     // console.log(data);
