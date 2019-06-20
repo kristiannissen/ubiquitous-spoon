@@ -46,6 +46,7 @@ const Form = props => {
     });
   }, []);
 
+    const change = data => dispatch({type: "change", ...data})
   const submitHandler = () => {
     console.log(state);
   };
