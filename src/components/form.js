@@ -41,12 +41,12 @@ const Form = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     socket.on("project-edit", data => {
-        console.log(data)
-        dispatch({ type: "edit", ...data })
+      console.log(data);
+      dispatch({ type: "edit", ...data });
     });
   }, []);
 
-    const change = data => dispatch({type: "change", ...data})
+  const change = data => dispatch({ type: "change", ...data });
   const submitHandler = () => {
     console.log(state);
   };
