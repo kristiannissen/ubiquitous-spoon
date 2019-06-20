@@ -17,7 +17,7 @@ const Project = props => {
 
   return (
     <div className="project-component">
-      <div>
+      <div className="project-title">
         <a href="#" onClick={() => emit(props.id)}>
           {props.name}
         </a>

@@ -13,8 +13,8 @@ const initialState = {
   _id: null
 };
 
-const reducer = (state, action) => {
-  // console.log("reducer", state, action);
+const reducer = (state = initialState, action) => {
+  //  console.log("reducer", state, action);
   switch (action.type) {
     default:
       return state;
@@ -50,12 +50,14 @@ const Form = props => {
   const submitHandler = () => {
     console.log(state);
   };
+  const formElm = useRef(null);
 
   return (
     <form
       className="mdl-grid"
       onSubmit={e => e.preventDefault()}
       autoComplete="off"
+      ref={formElm}
     >
       <InputField
         name="name"
@@ -85,7 +87,7 @@ const Form = props => {
           Save
         </button>
         <button
-          onClick={() => console.log("Cancel")}
+          onClick={() => formElm.current.reset()}
           className="mdl-button mdl-js-button"
         >
           Cancel

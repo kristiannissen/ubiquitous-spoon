@@ -22,8 +22,10 @@ const InputField = props => {
       <input
         className="mdl-textfield__input"
         {...attributes}
-        value={val}
-        onChange={e => setValue(e.target.value)}
+        value={props.value}
+        onChange={e =>
+          props.onChange({ name: e.target.name, value: e.target.value })
+        }
         onFocus={() => divEl.current.classList.add("is-focused")}
         onBlur={() => divEl.current.classList.remove("is-focused")}
       />
