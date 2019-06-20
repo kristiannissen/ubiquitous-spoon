@@ -17,3 +17,7 @@ body {
   border-radius: 2px;
   box-shadow: 2px 2px #4169e1;
 }
+.project-timeline-text {
+  color: #fff;
+  padding: 2px 5px;
+}

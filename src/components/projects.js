@@ -8,7 +8,8 @@ import {
   monthsBetween,
   getMonthName,
   addMonths,
-  weekDiff
+  weekDiff,
+  pmu
 } from "./../datehelpers";
 
 import Project from "./project";
@@ -28,11 +29,8 @@ const Projects = props => {
   let dates = projectDateRange(projects),
     monthRange = monthsBetween(dates[0], addMonths(dates[0], 3)).map(
       (month, indx) => {
-        // console.log(month)
-        // TODO: Divide range by 12 to use full document width
-        let cssCol = 12 / 4;
         return (
-          <div key={indx} className={`mdl-cell mdl-cell--${cssCol}-col`}>
+          <div key={indx} className={`mdl-cell mdl-cell--3-col`}>
             {getMonthName(month)}
           </div>
         );
@@ -44,11 +42,11 @@ const Projects = props => {
         endDate = new Date(project.endDate),
         duration = weekDiff(startDate, endDate),
         weeksFromStart = weekDiff(dates[0], startDate),
-        offset = getOffset(startDate),
+        offset = getOffset(dates[0], startDate) + pmu(startDate),
         css = ["mdl-cell"];
       css.push(`mdl-cell--${duration}-col`);
-      css.push(`mdl-cell--${weeksFromStart}-offset`);
-      console.log({ dur: duration, weeksfrom: weeksFromStart, offset: offset });
+      css.push(`mdl-cell--${offset}-offset`);
+      // console.log({ dur: duration, weeksfrom: weeksFromStart, offset: offset });
 
       return (
         <div
@@ -92,13 +90,11 @@ const projectDateRange = dateArr => {
   return dates;
 };
 
-const getOffset = dateObj => {
-  let date = dateObj.getDate(),
-    offset = 0;
-
-  if (date <= 10) offset = 0;
-  if (date > 10 && date <= 20) offset = 1;
-  if (date > 20) offset = 2;
+const getOffset = (first, second) => {
+  let offset = 0;
+  if (first.getMonth() < second.getMonth()) {
+    offset = (second.getMonth() - first.getMonth()) * 3;
+  }
   return offset;
 };
 

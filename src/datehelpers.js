@@ -105,3 +105,11 @@ export const datesBetween = (first, second) => {
   }
   return dates;
 };
+
+export const pmu = date => {
+  if (date.getDate() <= 10) return 0;
+  if (date.getDate() > 10 && date.getDate() <= 20) return 1;
+  if (date.getDate() > 20) return 2;
+};
+
+export const getPMU = num => ["Primo", "Medio", "Ultimo"][num];

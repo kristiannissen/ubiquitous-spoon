@@ -4,11 +4,11 @@
 import React from "react";
 import io from "socket.io-client";
 
-import { weekDiff } from "./../datehelpers";
+import { weekDiff, formatDate, getPMU, pmu } from "./../datehelpers";
 
 const Project = props => {
-  let startDate = new Date(Date.parse(props.startDate)),
-    endDate = new Date(Date.parse(props.endDate));
+  let startDate = new Date(props.startDate),
+    endDate = new Date(props.endDate);
 
   const emit = id => {
     let socket = io();
@@ -22,9 +22,16 @@ const Project = props => {
           {props.name}
         </a>
       </div>
-      <div className="project-timeline" />
+      <div className="project-timeline">
+        <div className="project-timeline-text">
+          Start: {communicatedStart(startDate)} Duration:{" "}
+          {weekDiff(startDate, endDate)}W
+        </div>
+      </div>
     </div>
   );
 };
+
+const communicatedStart = date => getPMU(pmu(date));
 
 export default Project;
