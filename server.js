@@ -20,6 +20,10 @@ const readData = () => {
     });
   });
 };
+/**
+ * @param {object} - JSON object to store
+ * @return empty promise
+ */
 const writeData = data => {
   let jsonData = JSON.stringify(data);
   return new Promise((resolve, reject) => {
@@ -48,15 +52,15 @@ io.on("connection", socket => {
       })
       .catch(err => console.log(err));
   });
-    socket.on("project-edit", props => {
-        readData()
-        .then(data => {
-            // console.log(data.projects, props)
-            let project = data.projects[props.id] || {}
-            io.emit("project-edit", Object.assign({_id: props.id}, project))
-        })
-        .catch(err => console.log(err))
-    })
+  socket.on("project-edit", props => {
+    readData()
+      .then(data => {
+        // console.log(data.projects, props)
+        let project = data.projects[props.id] || {};
+        io.emit("project-edit", Object.assign({ _id: props.id }, project));
+      })
+      .catch(err => console.log(err));
+  });
   // Get all projects
   socket.on("projects", () => {
     // Read data and return projects
