@@ -41,6 +41,7 @@ io.on("connection", socket => {
 
   // Create project
   socket.on("project-create", doc => {
+      console.log("create", doc)
     readData()
       .then(data => {
         let projects = data.projects;
@@ -53,6 +54,7 @@ io.on("connection", socket => {
       .catch(err => console.log(err));
   });
   socket.on("project-edit", props => {
+      console.log("edit", props)
     readData()
       .then(data => {
         // console.log(data.projects, props)

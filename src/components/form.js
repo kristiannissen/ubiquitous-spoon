@@ -30,7 +30,7 @@ const reducer = (state, action) => {
         name: action.name,
         startDate: action.startDate,
         endDate: action.endDate,
-        _id: action.id
+        _id: action.__id
       };
   }
 };
@@ -40,10 +40,12 @@ const socket = io();
 const Form = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
-    socket.on("project-edit", data => dispatch({ type: "edit", ...data }));
+    socket.on("project-edit", data => {
+        console.log(data)
+        dispatch({ type: "edit", ...data })
+    });
   }, []);
 
-  const change = data => console.log(data);
   const submitHandler = () => {
     console.log(state);
   };
