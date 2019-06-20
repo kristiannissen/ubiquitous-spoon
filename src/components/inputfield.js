@@ -12,7 +12,7 @@ const InputField = props => {
 
   const divEl = useRef(null);
   useEffect(() => {
-    if (props.name !== "") {
+    if (/\S/.test(props.name)) {
       divEl.current.classList.add("is-dirty");
     }
   }, []);
