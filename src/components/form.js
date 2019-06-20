@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
         name: action.name,
         startDate: action.startDate,
         endDate: action.endDate,
-        _id: action.__id
+        _id: action._id
       };
   }
 };
@@ -41,14 +41,16 @@ const Form = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     socket.on("project-edit", data => {
-      console.log(data);
+      // console.log(data);
       dispatch({ type: "edit", ...data });
     });
   }, []);
 
   const change = data => dispatch({ type: "change", ...data });
   const submitHandler = () => {
-    console.log(state);
+    let id = state._id;
+    delete state._id;
+    socket.emit("project-update", id, state);
   };
   const formElm = useRef(null);
 
@@ -66,14 +68,14 @@ const Form = props => {
         onChange={change}
       />
       <InputField
-        type="date"
+        type="text"
         name="startDate"
         label="Enter Start Date"
         value={state.startDate}
         onChange={change}
       />
       <InputField
-        type="date"
+        type="text"
         name="endDate"
         label="Enter End Date"
         value={state.endDate}

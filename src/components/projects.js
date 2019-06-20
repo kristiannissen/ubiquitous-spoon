@@ -40,14 +40,15 @@ const Projects = props => {
     ),
     gantt = Object.keys(projects).map((key, indx) => {
       let project = projects[key],
-        startDate = new Date(Date.parse(project.startDate)),
-        endDate = new Date(Date.parse(project.endDate)),
+        startDate = new Date(project.startDate),
+        endDate = new Date(project.endDate),
         duration = weekDiff(startDate, endDate),
         weeksFromStart = weekDiff(dates[0], startDate),
         offset = getOffset(startDate),
         css = ["mdl-cell"];
       css.push(`mdl-cell--${duration}-col`);
-      css.push(`mdl-cell--${weeksFromStart - offset}-offset`);
+      css.push(`mdl-cell--${weeksFromStart}-offset`);
+      console.log({ dur: duration, weeksfrom: weeksFromStart, offset: offset });
 
       return (
         <div
@@ -76,14 +77,19 @@ const Projects = props => {
 const projectDateRange = dateArr => {
   let dates = [];
   Object.keys(dateArr).forEach(key => {
-    dates.push(new Date(Date.parse(dateArr[key].startDate)));
-    dates.push(new Date(Date.parse(dateArr[key].endDate)));
+    dates.push(new Date(dateArr[key].startDate));
+    dates.push(new Date(dateArr[key].endDate));
   });
-  return dates.sort((a, b) => {
+  dates.sort((a, b) => {
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
   });
+  let date = new Date(dates[0]);
+  if (date.getDate() != 1) {
+    dates = [new Date(date.setDate(1))].concat(dates);
+  }
+  return dates;
 };
 
 const getOffset = dateObj => {
@@ -91,9 +97,8 @@ const getOffset = dateObj => {
     offset = 0;
 
   if (date <= 10) offset = 0;
-  if (date > 10 && date <= 20) offset = 2;
-  if (date > 20) offset = 3;
-  // console.log(offset, date)
+  if (date > 10 && date <= 20) offset = 1;
+  if (date > 20) offset = 2;
   return offset;
 };
 

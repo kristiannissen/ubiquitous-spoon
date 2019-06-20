@@ -1,7 +1,7 @@
 /**
  * @file src/components/inputfield.js
  */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 const InputField = props => {
   let attributes = {
@@ -9,10 +9,13 @@ const InputField = props => {
     type: props.type || "text",
     id: `id_${props.name}`
   };
-  const [val, setValue] = useState(props.value);
-  useEffect(() => props.onChange({ name: props.name, value: val }), [val]);
 
   const divEl = useRef(null);
+  useEffect(() => {
+    if (props.name !== "") {
+      divEl.current.classList.add("is-dirty");
+    }
+  }, []);
 
   return (
     <div

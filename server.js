@@ -41,7 +41,7 @@ io.on("connection", socket => {
 
   // Create project
   socket.on("project-create", doc => {
-      console.log("create", doc)
+    console.log("create", doc);
     readData()
       .then(data => {
         let projects = data.projects;
@@ -54,7 +54,7 @@ io.on("connection", socket => {
       .catch(err => console.log(err));
   });
   socket.on("project-edit", props => {
-      console.log("edit", props)
+    // console.log("edit", props);
     readData()
       .then(data => {
         // console.log(data.projects, props)
@@ -62,6 +62,16 @@ io.on("connection", socket => {
         io.emit("project-edit", Object.assign({ _id: props.id }, project));
       })
       .catch(err => console.log(err));
+  });
+  socket.on("project-update", (id, doc) => {
+    readData().then(data => {
+      let projects = data.projects;
+      projects[id] = doc;
+      data["projects"] = projects;
+      writeData(data)
+        .then(() => io.emit("projects", data.projects))
+        .catch(err => console.log(err));
+    });
   });
   // Get all projects
   socket.on("projects", () => {
