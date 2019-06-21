@@ -34,6 +34,8 @@ const reducer = (state = initialState, action) => {
       };
     case "reset":
           return initialState
+    case "delete":
+          return initialState
   }
 };
 
@@ -54,6 +56,8 @@ const Form = props => {
     delete state._id;
     socket.emit("project-update", id, state);
   };
+    const deleteHandler = () => socket.emit("project-delete", {_id: state._id})
+
   const formElm = useRef(null);
 
   return (
@@ -97,6 +101,14 @@ const Form = props => {
           Cancel
         </button>
       </div>
+      { state._id !== null &&
+          <button className="mdl-button mdl-js-button mdl-button--icon" onClick={() => {
+              dispatch({type: "delete", _id: state._id})
+                deleteHandler()
+          }}>
+            <i className="material-icons">delete</i>
+          </button>
+      }
     </form>
   );
 };

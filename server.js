@@ -73,6 +73,17 @@ io.on("connection", socket => {
         .catch(err => console.log(err));
     });
   });
+    socket.on("project-delete", _id => {
+        readData().then(data => {
+            let projects = data.projects
+            for (let key in projects) {
+                console.log(key, projects[key])
+            }
+            // writeData(data)
+            // .then(() => io.emit("projects", data.projects))
+            // .catch(err => console.log(err))
+        })
+    })
   // Get all projects
   socket.on("projects", () => {
     // Read data and return projects
