@@ -32,6 +32,8 @@ const reducer = (state = initialState, action) => {
         endDate: action.endDate,
         _id: action._id
       };
+    case "reset":
+          return initialState
   }
 };
 
@@ -89,7 +91,7 @@ const Form = props => {
           Save
         </button>
         <button
-          onClick={() => formElm.current.reset()}
+          onClick={() => dispatch({type: "reset"})}
           className="mdl-button mdl-js-button"
         >
           Cancel
