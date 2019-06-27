@@ -73,17 +73,22 @@ io.on("connection", socket => {
         .catch(err => console.log(err));
     });
   });
-    socket.on("project-delete", _id => {
-        readData().then(data => {
-            let projects = data.projects
-            for (let key in projects) {
-                console.log(key, projects[key])
-            }
-            // writeData(data)
-            // .then(() => io.emit("projects", data.projects))
-            // .catch(err => console.log(err))
-        })
-    })
+  socket.on("project-delete", props => {
+    readData().then(data => {
+      let projectsOld = data.projects,
+        projectsNew = {};
+
+      for (let key in projectsOld) {
+        if (props._id !== key) {
+          projectsNew[key] = projectsOld[key];
+        }
+      }
+      data["projects"] = projectsNew;
+      writeData(data)
+        .then(() => io.emit("projects", data.projects))
+        .catch(err => console.log(err));
+    });
+  });
   // Get all projects
   socket.on("projects", () => {
     // Read data and return projects
